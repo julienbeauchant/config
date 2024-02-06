@@ -13,10 +13,10 @@
 // } -->
 
 <?php
-    if (isset($_GET["page"]) && $_GET["page"] == "formation") {
-        $sql = "SELECT * FROM formations";
-        $requete = $bdd->query($sql);
-        $resultsFormation = $requete->fetchAll(PDO::FETCH_ASSOC);
+if (isset($_GET["page"]) && $_GET["page"] == "formation") {
+    $sql = "SELECT * FROM formations";
+    $requete = $bdd->query($sql);
+    $resultsFormation = $requete->fetchAll(PDO::FETCH_ASSOC);
 ?>
     <div class="centerDiv">
         <table>
@@ -43,8 +43,8 @@
                 <input type="submit" name="submitFormation" value="Ajouter">
             </form>
             <?php
-                echo '<table border="1">';
-                echo "<tr>
+            echo '<table border="1">';
+            echo "<tr>
                         <th>ID</th>
                         <th>Nom</th>
                         <th>Durée</th>
@@ -53,61 +53,84 @@
                         <th>Modifier</th>
                         <th>Supprimer</th>
                         </tr>"; // Ajoutez les en-têtes appropriés
-                foreach ($resultsFormation as $item) {
-                    echo '<tr>';
-                    echo '<td>' . $item['id_formation'] . '</td>';
-                    echo '<td>' . $item['nom_formation'] . '</td>';
-                    echo '<td>' . $item['duree_formation'] . '</td>';
-                    echo '<td>' . $item['niveau_sortie_formation'] . '</td>';
-                    echo '<td>' . $item['description'] . '</td>';
-                    echo '<input type="hidden" name="hiddenFormation" value="'. $item['id_formation'] . '">';
-                    echo '<td><a href="?page=formation&type=modifier&id=' . $item['id_formation'] . '"><button>Modifier</button></a></td>';
-                    echo '<td><button>Supprimer</button></td>';
-                    echo '</tr>';
-                }
+            foreach ($resultsFormation as $item) {
+                echo '<tr>';
+                echo '<td>' . $item['id_formation'] . '</td>';
+                echo '<td>' . $item['nom_formation'] . '</td>';
+                echo '<td>' . $item['duree_formation'] . '</td>';
+                echo '<td>' . $item['niveau_sortie_formation'] . '</td>';
+                echo '<td>' . $item['description'] . '</td>';
+                echo '<input type="hidden" name="hiddenFormation" value="' . $item['id_formation'] . '">';
+                echo '<td><a href="?page=formation&type=modifier&id=' . $item['id_formation'] . '"><button>Modifier</button></a></td>';
+                echo '<td><a href="?page=formation&type=supprimer&id=' . $item['id_formation'] . '"><button>Supprimer</button></>';
+                echo '</tr>';
+            }
             ?>
         </table>
     </div>
+    <?php
+    if (isset($_GET['type']) && $_GET['type'] == "modifier") {
+
+        $id = $_GET["id"];
+        $sqlId = "SELECT * FROM formations WHERE id_formation = $id";
+        $requeteId = $bdd->query($sqlId);
+        $resultsId = $requeteId->fetch(PDO::FETCH_ASSOC);
+    ?>
+        <form method="POST">
+            <input type="hidden" name="updateIdFormation" value="<?php echo $resultsId['id_formation']; ?>">
+            <input type="text" name="updateNomFormation" value="<?php echo $resultsId['nom_formation']; ?>">
+            <input type="text" name="updateDureeFormation" value="<?php echo $resultsId['duree_formation']; ?>">
+            <input type="text" name="updateNiveauSortieFormation" value="<?php echo $resultsId['niveau_sortie_formation']; ?>">
+            <input type="text" name="updateDescrition" value="<?php echo $resultsId['description']; ?>">
+            <input type="submit" name="updateFormation" value="updateFormations">
+        </form>
+        <?php
+        if (isset($_POST["updateFormation"])) {
+            $updateIdFormation = $_POST["updateIdFormation"];
+            $updateNomFormation = $_POST["updateNomFormation"];
+            $updateDureeFormation = $_POST["updateDureeFormation"];
+            $updateNiveauSortieFormation = $_POST["updateNiveauSortieFormation"];
+            $updateDescrition = $_POST["updateDescrition"];
+            $sqlUpdate = "UPDATE `formations` SET `nom_formation`='$updateNomFormation', `duree_formation`='$updateDureeFormation', `niveau_sortie_formation`='$updateNiveauSortieFormation', `description`='$updateDescrition' WHERE id_formation = $updateIdFormation";
+
+            $bdd->query($sqlUpdate);
+            echo "Données modifiées";
+        }
+    }
+
+
+    if (isset($_GET['type']) && $_GET['type'] == "supprimer") {
+
+        $id = $_GET["id"];
+        $sqlId = "SELECT * FROM formations WHERE id_formation = $id";
+        $requeteId = $bdd->query($sqlId);
+        $resultsId = $requeteId->fetch(PDO::FETCH_ASSOC);
+        ?>
+        <form method="POST">
+            <input type="hidden" name="deleteIdFormation" value="<?php echo $resultsId['id_formation']; ?>">
+            <input type="submit" name="deleteFormation" value="deleteFormation">
+        </form>
 <?php
-        if (isset($_GET['type']) && $_GET['type'] == "modifier"){
+        if (isset($_POST["deleteFormation"])) {
+            $deleteIdFormation = $_POST["deleteIdFormation"];
+            // $updateNomRole = $_POST["updateNomRole"];
+            $sqlDelete = "DELETE FROM `formations` WHERE id_formation = $deleteIdFormation";
 
-            $id = $_GET["id"];
-            $sqlId = "SELECT * FROM formations WHERE id_formation = $id";
-            $requeteId = $bdd->query($sqlId);
-            $resultsId = $requeteId->fetch(PDO::FETCH_ASSOC);
+            $bdd->query($sqlDelete);
+            echo "Données modifiées";
+        }
+    }
+
+    if (isset($_POST['submitFormation'])) {
+        $nomFormation = $_POST['nomFormation'];
+        $dureeFormation = $_POST['dureeFormation'];
+        $niveauSortieFormation = $_POST['niveauSortieFormation'];
+        $descriptionFormation = $_POST['descriptionFormation'];
+
+        $sql = "INSERT INTO `formations`(`nom_formation`, `duree_formation`, `niveau_sortie_formation`, `description`) VALUES ('$nomFormation','$dureeFormation','$niveauSortieFormation','$descriptionFormation')";
+        $bdd->query($sql);
+
+        echo "data ajoutée dans la bdd";
+    }
+}
 ?>
-            <form method="POST">
-                <input type="hidden" name="updateIdFormation" value="<?php  echo $resultsId['id_formation']; ?>">
-                <input type="text" name="updateNomFormation" value="<?php  echo $resultsId['nom_formation']; ?>">
-                <input type="text" name="updateDureeFormation" value="<?php  echo $resultsId['duree_formation']; ?>">
-                <input type="text" name="updateNiveauSortieFormation" value="<?php  echo $resultsId['niveau_sortie_formation']; ?>">
-                <input type="text" name="updateDescrition" value="<?php  echo $resultsId['description']; ?>">
-                <input type="submit" name="updateFormation" value="updateFormations">
-            </form>
-            <?php
-                        if (isset($_POST["updateFormation"])){
-                            $updateIdFormation = $_POST["updateIdFormation"];
-                            $updateNomFormation = $_POST["updateNomFormation"];
-                            $updateDureeFormation = $_POST["updateDureeFormation"];
-                            $updateNiveauSortieFormation = $_POST["updateNiveauSortieFormation"];
-                            $updateDescrition = $_POST["updateDescrition"];
-                            $sqlUpdate = "UPDATE `formations` SET `nom_formation`='$updateNomFormation', `duree_formation`='$updateDureeFormation', `niveau_sortie_formation`='$updateNiveauSortieFormation', `description`='$updateDescrition' WHERE id_formation = $updateIdFormation";
-
-                            $bdd->query($sqlUpdate);
-                            echo "Données modifiées";
-                        }
-                    }
-                }
-
-                if (isset($_POST['submitFormation'])){
-                    $nomFormation = $_POST['nomFormation'];
-                    $dureeFormation = $_POST['dureeFormation'];
-                    $niveauSortieFormation = $_POST['niveauSortieFormation'];
-                    $descriptionFormation = $_POST['descriptionFormation'];
-
-                    $sql = "INSERT INTO `formations`(`nom_formation`, `duree_formation`, `niveau_sortie_formation`, `description`) VALUES ('$nomFormation','$dureeFormation','$niveauSortieFormation','$descriptionFormation')";
-                    $bdd->query($sql);
-
-                    echo "data ajoutée dans la bdd";
-                }
-            ?>

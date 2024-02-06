@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <title>AFCI - gestion des centres - BDD</title>
 </head>
+
 <body>
     <header>
         <nav>
@@ -19,13 +21,13 @@
             </ul>
         </nav>
     </header>
-<?php
-$host = "mysql"; // Nom du service du conteneur MySQL dans Docker
+    <?php
+    $host = "mysql"; // Nom du service du conteneur MySQL dans Docker
 
-$port = "3306"; // Le port exposé par le conteneur MySQL dans Docker
-$dbname = "afci"; // Remplacez par le nom de votre base de données
-$user = "admin"; // Remplacez par votre nom d'utilisateur
-$pass = "admin"; // Remplacez par votre mot de passe
+    $port = "3306"; // Le port exposé par le conteneur MySQL dans Docker
+    $dbname = "afci"; // Remplacez par le nom de votre base de données
+    $user = "admin"; // Remplacez par votre nom d'utilisateur
+    $pass = "admin"; // Remplacez par votre mot de passe
 
 
     // Création d'une nouvelle instance de la classe PDO
@@ -37,7 +39,7 @@ $pass = "admin"; // Remplacez par votre mot de passe
     // $sql = "SELECT * FROM apprenants";
     // $requete = $bdd->query($sql);
     // $results = $requete->fetchAll(PDO::FETCH_ASSOC);
-    
+
 
     // foreach( $results as $value ){
     //     foreach($value as $data){
@@ -56,28 +58,28 @@ $pass = "admin"; // Remplacez par votre mot de passe
 
     // Insérer des données dans la BDD
 
-// ROLE -------------------------------------------------------------------------------------- 
+    // ROLE -------------------------------------------------------------------------------------- 
 
-include "role.php";
+    include "role.php";
 
-// CENTRE -------------------------------------------------------------------------------------- 
+    // CENTRE -------------------------------------------------------------------------------------- 
 
-include "centres.php";
+    include "centres.php";
 
-// FORMATION -------------------------------------------------------------------------------------- 
+    // FORMATION -------------------------------------------------------------------------------------- 
 
-include "formations.php";
+    include "formations.php";
 
-// PEDAGOGIE -------------------------------------------------------------------------------------- 
+    // PEDAGOGIE -------------------------------------------------------------------------------------- 
 
-include "pedagogie.php";
+    include "pedagogie.php";
 
-// SESSION -------------------------------------------------------------------------------------- 
+    // SESSION -------------------------------------------------------------------------------------- 
 
-include "session.php";
+    include "session.php";
 
-// APPRENANT -------------------------------------------------------------------------------------- 
+    // APPRENANT -------------------------------------------------------------------------------------- 
 
-include "apprenants.php";
+    include "apprenants.php";
 
-?>
+    ?>

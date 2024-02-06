@@ -77,7 +77,7 @@
                         echo "Données modifiées";
                     }
                 }
-        }
+       
 
                 if (isset($_GET['type']) && $_GET['type'] == "supprimer"){
 
@@ -112,4 +112,5 @@
 
                         echo "data ajoutée dans la bdd";
                     }
+                }
                 ?>
