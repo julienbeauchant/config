@@ -208,25 +208,59 @@ if (isset($_GET["page"]) && $_GET["page"] == "apprenant") {
     }
 
     if (isset($_POST['submitApprenant'])) {
-        $nomApprenant = $_POST['nomApprenant'];
-        $prenomApprenant = $_POST['prenomApprenant'];
-        $mailApprenant = $_POST['mailApprenant'];
-        $adresseApprenant = $_POST['adresseApprenant'];
-        $villeApprenant = $_POST['villeApprenant'];
-        $codePostalApprenant = $_POST['codePostalApprenant'];
-        $telApprenant = $_POST['telApprenant'];
-        $dateNaissanceApprenant = $_POST['dateNaissanceApprenant'];
-        $niveauApprenant = $_POST['niveauApprenant'];
-        $numPeApprenant = $_POST['numPeApprenant'];
-        $numSecuApprenant = $_POST['numSecuApprenant'];
-        $ribApprenant = $_POST['ribApprenant'];
-        $idRole = $_POST['idApprenant'];
-        $idSession = $_POST['idApprenant'];
 
-        $sql = "INSERT INTO `apprenants`(`nom_apprenant`, `prenom_apprenant`, `mail_apprenant`, `adresse_apprenant`, `ville_apprenant`, `code_postal_apprenant`, `tel_apprenant`, `date_naissance_apprenant`, `niveau_apprenant`, `num_PE_apprenant`, `num_secu_apprenant`, `rib_apprenant`, `id_role`, `id_session`) VALUES ('$nomApprenant', '$prenomApprenant','$mailApprenant','$adresseApprenant', '$villeApprenant', '$codePostalApprenant', '$telApprenant', '$dateNaissanceApprenant', '$niveauApprenant', '$numPeApprenant', '$numSecuApprenant', '$ribApprenant', '$idRole', '$idSession')";
-        $bdd->query($sql);
+        $sql = "INSERT INTO `apprenants`(`nom_apprenant`, `prenom_apprenant`, `mail_apprenant`, `adresse_apprenant`, `ville_apprenant`, `code_postal_apprenant`, `tel_apprenant`, `date_naissance_apprenant`, `niveau_apprenant`, `num_PE_apprenant`, `num_secu_apprenant`, `rib_apprenant`, `id_role`, `id_session`) VALUES (:nomApprenant, :prenomApprenant, :mailApprenant, :adresseApprenant, :villeApprenant, :codePostalApprenant, :telApprenant, :dateNaissanceApprenant, :niveauApprenant, :numPeApprenant, :numSecuApprenant, :ribApprenant, :idRole, :idSession)";
+        
+        $requete = $bdd->prepare($sql);
 
-        echo "data ajoutée dans la bdd";
+        // $nomApprenant = $_POST['nomApprenant'];
+        // $prenomApprenant = $_POST['prenomApprenant'];
+        // $mailApprenant = $_POST['mailApprenant'];
+        // $adresseApprenant = $_POST['adresseApprenant'];
+        // $villeApprenant = $_POST['villeApprenant'];
+        // $codePostalApprenant = $_POST['codePostalApprenant'];
+        // $telApprenant = $_POST['telApprenant'];
+        // $dateNaissanceApprenant = $_POST['dateNaissanceApprenant'];
+        // $niveauApprenant = $_POST['niveauApprenant'];
+        // $numPeApprenant = $_POST['numPeApprenant'];
+        // $numSecuApprenant = $_POST['numSecuApprenant'];
+        // $ribApprenant = $_POST['ribApprenant'];
+        // $idRole = $_POST['idApprenant'];
+        // $idSession = $_POST['idApprenant'];
+        
+        $nomApprenant = $_POST['createNomApprenant'];
+        $prenomApprenant = $_POST['createPrenomApprenant'];
+        $mailApprenant = $_POST['createMailApprenant'];
+        $adresseApprenant = $_POST['createAdresseApprenant'];
+        $villeApprenant = $_POST['createVilleApprenant'];
+        $codePostalApprenant = $_POST['createCodePostalApprenant'];
+        $telApprenant = $_POST['createTelApprenant'];
+        $dateNaissanceApprenant = $_POST['createDateNaissanceApprenant'];
+        $niveauApprenant = $_POST['createNiveauApprenant'];
+        $numPeApprenant = $_POST['createNumPeApprenant'];
+        $numSecuApprenant = $_POST['createNumSecuApprenant'];
+        $ribApprenant = $_POST['createRibApprenant'];
+        $idRole = $_POST['createIdRole'];
+        $idSession = $_POST['createIdSession'];
+
+        $requete->bindParam(':nomApprenant', $nomApprenant);
+        $requete->bindParam(':prenomApprenant', $prenomApprenant);
+        $requete->bindParam(':mailApprenant', $mailApprenant);
+        $requete->bindParam(':adresseApprenant', $adresseApprenant);
+        $requete->bindParam(':villeApprenant', $villeApprenant);
+        $requete->bindParam(':codePostalApprenant', $codePostalApprenant);
+        $requete->bindParam(':telApprenant', $telApprenant);
+        $requete->bindParam(':dateNaissanceApprenant', $dateNaissanceApprenant);
+        $requete->bindParam(':niveauApprenant', $niveauApprenant);
+        $requete->bindParam(':numPeApprenant', $numPeApprenant);
+        $requete->bindParam(':numSecuApprenant', $numSecuApprenant);
+        $requete->bindParam(':ribApprenant', $ribApprenant);
+        $requete->bindParam(':idRole', $idRole);
+        $requete->bindParam(':idSession', $idSession);
+
+        $requete->execute();
+
+        echo "les data ajoutée dans la bdd";
     }
 }
 ?>
