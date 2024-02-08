@@ -122,15 +122,25 @@ if (isset($_GET["page"]) && $_GET["page"] == "formation") {
     }
 
     if (isset($_POST['submitFormation'])) {
+
+        $sql = "INSERT INTO `formations`(`nom_formation`, `duree_formation`, `niveau_sortie_formation`, `description`) VALUES (:nomFormation, :dureeFormation,:niveauSortieFormation,:descriptionFormation)";
+
+        $requete = $bdd->prepare($sql);
+
         $nomFormation = $_POST['nomFormation'];
         $dureeFormation = $_POST['dureeFormation'];
         $niveauSortieFormation = $_POST['niveauSortieFormation'];
         $descriptionFormation = $_POST['descriptionFormation'];
 
-        $sql = "INSERT INTO `formations`(`nom_formation`, `duree_formation`, `niveau_sortie_formation`, `description`) VALUES ('$nomFormation','$dureeFormation','$niveauSortieFormation','$descriptionFormation')";
-        $bdd->query($sql);
 
-        echo "data ajoutée dans la bdd";
+        $requete->bindParam(':nomFormation', $nomFormation);
+        $requete->bindParam(':dureeFormation', $dureeFormation);
+        $requete->bindParam(':niveauSortieFormation', $niveauSortieFormation);
+        $requete->bindParam(':descriptionFormation', $descriptionFormation);
+
+        $requete->execute();
+
+        echo "les data ajoutée dans la bdd";
     }
 }
 ?>

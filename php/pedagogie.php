@@ -41,7 +41,7 @@ if (isset($_GET["page"]) && $_GET["page"] == "pedagogie") {
                 <br>
                 <input type="text" name="numPedagogie" placeholder="numéro personnel Pedagogie">
                 <br>
-                <select name="idPedagogie" id="">
+                <select name="idPedagogieRole" id="">
                     <?php
                     $sql = "SELECT * FROM role";
                     $requete = $bdd->query($sql);
@@ -137,16 +137,27 @@ if (isset($_GET["page"]) && $_GET["page"] == "pedagogie") {
     }
 
     if (isset($_POST['submitPedagogie'])) {
+
+        $sql = "INSERT INTO `pedagogie`(`nom_pedagogie`, `prenom_pedagogie`, `mail_pedagogie`, `num_pedagogie`, `id_role`) VALUES (:nomPedagogie, :prenomPedagogie,:mailPedagogie, :numPedagogie, :idRole)";
+
+        $requete = $bdd->prepare($sql);
+
         $nomPedagogie = $_POST['nomPedagogie'];
         $prenomPedagogie = $_POST['prenomPedagogie'];
         $mailPedagogie = $_POST['mailPedagogie'];
         $numPedagogie = $_POST['numPedagogie'];
-        $idRole = $_POST['idPedagogie'];
+        $idRole = $_POST['idPedagogieRole'];
 
-        $sql = "INSERT INTO `pedagogie`(`nom_pedagogie`, `prenom_pedagogie`, `mail_pedagogie`, `num_pedagogie`, `id_role`) VALUES ('$nomPedagogie','$prenomPedagogie','$mailPedagogie','$numPedagogie','$idRole')";
-        $bdd->query($sql);
 
-        echo "data ajoutée dans la bdd";
+        $requete->bindParam(':nomPedagogie', $nomPedagogie);
+        $requete->bindParam(':prenomPedagogie', $prenomPedagogie);
+        $requete->bindParam(':mailPedagogie', $mailPedagogie);
+        $requete->bindParam(':numPedagogie', $numPedagogie);
+        $requete->bindParam(':idRole', $idRole);
+
+        $requete->execute();
+
+        echo "les data ajoutée dans la bdd";
     }
 }
 ?>

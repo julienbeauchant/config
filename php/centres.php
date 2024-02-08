@@ -114,14 +114,23 @@ if (isset($_GET["page"]) && $_GET["page"] == "centre") {
     }
 
     if (isset($_POST['submitCentre'])) {
+
+        $sql = "INSERT INTO `centres`(`ville_centre`, `adresse_centre`, `code_postal_centre`) VALUES (:villeCentre, :adresseCentre, :codePostalCentre)";
+
+        $requete = $bdd->prepare($sql);
+
         $villeCentre = $_POST['villeCentre'];
         $adresseCentre = $_POST['adresseCentre'];
         $codePostalCentre = $_POST['codePostalCentre'];
 
-        $sql = "INSERT INTO `centres`(`ville_centre`, `adresse_centre`, `code_postal_centre`) VALUES ('$villeCentre','$adresseCentre','$codePostalCentre')";
-        $bdd->query($sql);
 
-        echo "data ajoutée dans la bdd";
+        $requete->bindParam(':villeCentre', $villeCentre);
+        $requete->bindParam(':adresseCentre', $villeCentre);
+        $requete->bindParam(':codePostalCentre', $villeCentre);
+
+        $requete->execute();
+
+        echo "les data ajoutée dans la bdd";
     }
 }
 ?>

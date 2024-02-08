@@ -64,7 +64,7 @@ if (isset($_GET["page"]) && $_GET["page"] == "apprenant") {
                 <br>
                 <input type="text" name="ribApprenant" placeholder="RIB Apprenant">
                 <br>
-                <select name="idApprenant" id="">
+                <select name="idRoleApprenant" id="">
                     <!-- <option value="idrole">id - nom role</option> -->
                     <?php
                     $sql = "SELECT * FROM role";
@@ -76,7 +76,7 @@ if (isset($_GET["page"]) && $_GET["page"] == "apprenant") {
                     ?>
                 </select>
 
-                <select name="idApprenant" id="">
+                <select name="idSessionApprenant" id="">
                     <!-- <option value="idrole">id - nom role</option> -->
                     <?php
                     $sql = "SELECT * FROM session";
@@ -212,36 +212,21 @@ if (isset($_GET["page"]) && $_GET["page"] == "apprenant") {
         $sql = "INSERT INTO `apprenants`(`nom_apprenant`, `prenom_apprenant`, `mail_apprenant`, `adresse_apprenant`, `ville_apprenant`, `code_postal_apprenant`, `tel_apprenant`, `date_naissance_apprenant`, `niveau_apprenant`, `num_PE_apprenant`, `num_secu_apprenant`, `rib_apprenant`, `id_role`, `id_session`) VALUES (:nomApprenant, :prenomApprenant, :mailApprenant, :adresseApprenant, :villeApprenant, :codePostalApprenant, :telApprenant, :dateNaissanceApprenant, :niveauApprenant, :numPeApprenant, :numSecuApprenant, :ribApprenant, :idRole, :idSession)";
         
         $requete = $bdd->prepare($sql);
-
-        // $nomApprenant = $_POST['nomApprenant'];
-        // $prenomApprenant = $_POST['prenomApprenant'];
-        // $mailApprenant = $_POST['mailApprenant'];
-        // $adresseApprenant = $_POST['adresseApprenant'];
-        // $villeApprenant = $_POST['villeApprenant'];
-        // $codePostalApprenant = $_POST['codePostalApprenant'];
-        // $telApprenant = $_POST['telApprenant'];
-        // $dateNaissanceApprenant = $_POST['dateNaissanceApprenant'];
-        // $niveauApprenant = $_POST['niveauApprenant'];
-        // $numPeApprenant = $_POST['numPeApprenant'];
-        // $numSecuApprenant = $_POST['numSecuApprenant'];
-        // $ribApprenant = $_POST['ribApprenant'];
-        // $idRole = $_POST['idApprenant'];
-        // $idSession = $_POST['idApprenant'];
         
-        $nomApprenant = $_POST['createNomApprenant'];
-        $prenomApprenant = $_POST['createPrenomApprenant'];
-        $mailApprenant = $_POST['createMailApprenant'];
-        $adresseApprenant = $_POST['createAdresseApprenant'];
-        $villeApprenant = $_POST['createVilleApprenant'];
-        $codePostalApprenant = $_POST['createCodePostalApprenant'];
-        $telApprenant = $_POST['createTelApprenant'];
-        $dateNaissanceApprenant = $_POST['createDateNaissanceApprenant'];
-        $niveauApprenant = $_POST['createNiveauApprenant'];
-        $numPeApprenant = $_POST['createNumPeApprenant'];
-        $numSecuApprenant = $_POST['createNumSecuApprenant'];
-        $ribApprenant = $_POST['createRibApprenant'];
-        $idRole = $_POST['createIdRole'];
-        $idSession = $_POST['createIdSession'];
+        $nomApprenant = $_POST['nomApprenant'];
+        $prenomApprenant = $_POST['prenomApprenant'];
+        $mailApprenant = $_POST['mailApprenant'];
+        $adresseApprenant = $_POST['adresseApprenant'];
+        $villeApprenant = $_POST['villeApprenant'];
+        $codePostalApprenant = $_POST['codePostalApprenant'];
+        $telApprenant = $_POST['telApprenant'];
+        $dateNaissanceApprenant = $_POST['dateNaissanceApprenant'];
+        $niveauApprenant = $_POST['niveauApprenant'];
+        $numPeApprenant = $_POST['numPeApprenant'];
+        $numSecuApprenant = $_POST['numSecuApprenant'];
+        $ribApprenant = $_POST['ribApprenant'];
+        $idRole = $_POST['idRoleApprenant'];
+        $idSession = $_POST['idSessionApprenant'];
 
         $requete->bindParam(':nomApprenant', $nomApprenant);
         $requete->bindParam(':prenomApprenant', $prenomApprenant);

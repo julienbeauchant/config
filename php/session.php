@@ -38,7 +38,7 @@ if (isset($_GET["page"]) && $_GET["page"] == "session") {
                 <br>
                 <!-- <input type="text" name="idPedagogie" placeholder="idPedagogie">
                     <input type="text" name="idFormation" placeholder="idFormation"> -->
-                <select name="idSession" id="">
+                <select name="idSessionPedagogie" id="">
                     <!-- <option value="idrole">id - nom role</option> -->
                     <?php
                     $sql = "SELECT * FROM pedagogie";
@@ -50,7 +50,7 @@ if (isset($_GET["page"]) && $_GET["page"] == "session") {
                     ?>
                 </select>
 
-                <select name="idSession" id="">
+                <select name="idSessionFormation" id="">
                     <!-- <option value="idrole">id - nom role</option> -->
                     <?php
                     $sql = "SELECT * FROM formations";
@@ -62,7 +62,7 @@ if (isset($_GET["page"]) && $_GET["page"] == "session") {
                     ?>
                 </select>
 
-                <select name="idSession" id="">
+                <select name="idSessionCentre" id="">
                     <!-- <option value="idrole">id - nom role</option> -->
                     <?php
                     $sql = "SELECT * FROM centres";
@@ -160,16 +160,27 @@ if (isset($_GET["page"]) && $_GET["page"] == "session") {
     }
 
     if (isset($_POST['submitSession'])) {
+
+        $sql = "INSERT INTO `session`(`nom_session`, `date_debut`, `id_pedagogie`, `id_formation`, `id_centre`) VALUES (:nomSession, :dateDebutSession, :idPedagogie,:idFormation, :idCentre)";
+
+        $requete = $bdd->prepare($sql);
+
         $nomSession = $_POST['nomSession'];
         $dateDebutSession = $_POST['dateDebutSession'];
-        $idPedagogie = $_POST['idSession'];
-        $idFormation = $_POST['idSession'];
-        $idCentre = $_POST['idSession'];
+        $idPedagogie = $_POST['idSessionPedagogie'];
+        $idFormation = $_POST['idSessionFormation'];
+        $idCentre = $_POST['idSessionCentre'];
 
-        $sql = "INSERT INTO `session`(`nom_session`, `date_debut`, `id_pedagogie`, `id_formation`, `id_centre`) VALUES ('$nomSession', '$dateDebutSession','$idPedagogie','$idFormation', '$idCentre')";
-        $bdd->query($sql);
 
-        echo "data ajoutée dans la bdd";
+        $requete->bindParam(':nomSession', $nomSession);
+        $requete->bindParam(':dateDebutSession', $dateDebutSession);
+        $requete->bindParam(':idPedagogie', $idPedagogie);
+        $requete->bindParam(':idFormation', $idFormation);
+        $requete->bindParam(':idCentre', $idCentre);
+
+        $requete->execute();
+
+        echo "les data ajoutée dans la bdd";
     }
 }
 ?>
